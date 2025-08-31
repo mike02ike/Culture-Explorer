@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
-import { MapContainer, TileLayer } from 'react-leaflet';
+import { GeoJSON, MapContainer, TileLayer } from 'react-leaflet';
+import worldData from '../data/world.json';
 
-const WorldMap = () => {
+const WorldMap = ({ onCountryClick }) => {
   const mapRef = useRef();
 
   useEffect(() => {
@@ -33,12 +34,24 @@ const WorldMap = () => {
             mapRef.current = mapInstance;
         }}
         maxBounds={[[-85, -180], [85, 180]]}         // ⬅️ This sets the scroll limits
-        maxBoundsViscosity={1.0}                     // ⬅️ Prevents dragging past the bounds
+        maxBoundsViscosity={1.5}                     // ⬅️ Prevents dragging past the bounds
         minZoom={2.499}
     >
     <TileLayer
-        attribution='&copy; <a href="https://carto.com/">CARTO</a> | &copy; OpenStreetMap contributors'
         url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+    />
+    <GeoJSON
+      data={worldData}
+      style={{ color: "black", weight: 0.1, fillOpacity: 0 }}
+      onEachFeature={(feature, layer) => {
+        layer.on({
+          click: () => {
+            onCountryClick(feature.properties);
+            const countryName = feature.properties.name;
+            console.log("Clicked country:", countryName); // Debug log
+          }
+        });
+      }}
     />
     </MapContainer>
   );
