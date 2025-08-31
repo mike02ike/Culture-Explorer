@@ -39,7 +39,7 @@ npm run dev
 ```
 Open http://localhost:5173 in your browser.
 
-## 🌎 Data Sources
+## 📃 Data Sources
 	•	Country polygons: Natural Earth
 	•	Country info: REST Countries API
 	•	Additional info: CIA World Factbook
