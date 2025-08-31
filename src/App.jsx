@@ -12,7 +12,7 @@ function App() {
   useEffect(() => {
     if (!selectedCountry) return;
 
-    fetch(`https://restcountries.com/v3.1/name/${selectedCountry.sovereignt}?fullText=true`)
+    fetch(`https://restcountries.com/v3.1/name/${selectedCountry.admin}?fullText=true`)
       .then((res) => res.json())
       .then((data) => setCountryData(data[0]))
       .catch((err) => console.error("Error fetching country data:", err));
@@ -20,7 +20,11 @@ function App() {
 
   return (
     <div className="p-6">
-      <WorldMap onCountryClick={setSelectedCountry} />
+      <WorldMap
+        onCountryClick={setSelectedCountry}
+        selectedCountry={selectedCountry} 
+        countryData={countryData}
+      />
 
       {selectedCountry && (
         <div className="info-panel">
@@ -59,7 +63,8 @@ function App() {
                   : countryData.capital}
               </p>
               <p>Area: {Math.round((countryData.area * 0.386102), 0).toLocaleString()} mi²</p>
-            
+              <p>Independent? {countryData.independent ? "Yes" : "No"}</p>
+              <p>Number of Timezones: {countryData.timezones.length}</p>
             </>
           )}
 
@@ -75,6 +80,15 @@ function App() {
               className="text-blue-600 underline"
             >
               Learn more about {`${selectedCountry.name_long}`}!
+            </a>
+          </p>
+          <p>
+            <a
+              href={countryData?.maps?.googleMaps}
+              target="_blank"
+              className="text-blue-600 underline"
+            >
+              View on Google Maps
             </a>
           </p>
         </div>

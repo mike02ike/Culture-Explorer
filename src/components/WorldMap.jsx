@@ -1,9 +1,15 @@
+import L from 'leaflet';
 import { useEffect, useRef } from 'react';
-import { GeoJSON, MapContainer, TileLayer } from 'react-leaflet';
+import { GeoJSON, MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import starIconUrl from "../assets/star.png";
 import worldData from '../data/world.json';
 
-const WorldMap = ({ onCountryClick }) => {
+const WorldMap = ({ onCountryClick, selectedCountry, countryData }) => {
   const mapRef = useRef();
+  const starIcon = L.icon({
+  iconUrl: starIconUrl,
+  iconSize: [10, 10],   // size of the icon
+});
 
   useEffect(() => {
     const map = mapRef.current;
@@ -53,6 +59,14 @@ const WorldMap = ({ onCountryClick }) => {
         });
       }}
     />
+    {countryData?.capitalInfo?.latlng && (
+      <Marker position={countryData.capitalInfo.latlng} icon={starIcon}>
+        <Popup>
+          {selectedCountry?.name} – Capital: {countryData.capital?.[0]}
+        </Popup>
+      </Marker>
+    )}
+
     </MapContainer>
   );
 };
