@@ -1,12 +1,45 @@
-# React + Vite
+# 🌍 Culture Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Culture Explorer is an interactive map app that lets users click on any country to view cultural and geographical information.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
+- Interactive **world map** (React-Leaflet)  
+- Click any country to view a detailed preview:
+- Links to learn more
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Tech Stack
+- [React](https://reactjs.org/)  
+- [Vite](https://vitejs.dev/) (dev server & build tool)  
+- [React-Leaflet](https://react-leaflet.js.org/)  
+- [REST Countries API](https://restcountries.com/)  
+- [Natural Earth GeoJSON](https://www.naturalearthdata.com/)  
+
+---
+
+## ⚡ Getting Started
+
+### 1. Clone the repo
+```bash
+git clone https://github.com/mike02ike/culture-explorer.git
+cd culture-explorer
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Run development server
+```bash
+npm run dev
+```
+Open http://localhost:5173 in your browser.
+
+## 🌎 Data Sources
+	•	Country polygons: Natural Earth
+	•	Country info: REST Countries API
+	•	Additional info: CIA World Factbook
