@@ -3,7 +3,7 @@ import L from 'leaflet';
 import { useEffect, useRef } from 'react';
 import { GeoJSON, MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import starIconUrl from "../assets/star.png";
-import worldData from '../data/world.json';
+import worldData from '../data/geoVector.json';
 
 // WorldMap component
 const WorldMap = ({ onCountryClick, selectedCountry, countryData }) => {
