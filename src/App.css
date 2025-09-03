@@ -23,5 +23,5 @@
   display: block;            /* makes the image a block element */
   border: 2px solid black;   /* outline */
   border-radius: 4px;        /* rounded corners */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3); /* subtle shadow */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5); /* subtle shadow */
 }

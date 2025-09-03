@@ -1,25 +1,26 @@
+// import React hooks and styles
 import { useEffect, useState } from 'react';
 import './App.css';
 import WorldMap from './components/WorldMap';
 
-// Main application component
+// Main application
 function App() {
-  // State to hold the selected country
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [countryData, setCountryData] = useState(null);
-  
-  // fetch from REST Countries API when selectedCountry changes
+  const [selectedCountry, setSelectedCountry] = useState(""); // currently selected country
+  const [countryData, setCountryData] = useState(null);       // country data from API
+
+  // fetch country data when selectedCountry changes
   useEffect(() => {
     if (!selectedCountry) return;
 
     fetch(`https://restcountries.com/v3.1/name/${selectedCountry.admin}?fullText=true`)
       .then((res) => res.json())
-      .then((data) => setCountryData(data[0]))
+      .then((data) => setCountryData(data[0])) // store first result
       .catch((err) => console.error("Error fetching country data:", err));
   }, [selectedCountry]);
 
   return (
     <div className="p-6">
+      {/* interactive world map */}
       <WorldMap
         onCountryClick={setSelectedCountry}
         selectedCountry={selectedCountry} 
@@ -28,6 +29,7 @@ function App() {
 
       {selectedCountry && (
         <div className="info-panel">
+          {/* country header with flag */}
           <div className="country-header">
             <h2 className="text-xl font-semibold">{selectedCountry.name}</h2>
             {countryData?.flags?.png && (
@@ -39,7 +41,7 @@ function App() {
             )}
           </div>
 
-          {/* From API */}
+          {/* country info from API */}
           {countryData && (
             <>
               <p>Official Name: {countryData.name.official}</p>
@@ -47,8 +49,7 @@ function App() {
               <p>Region: {countryData.region} — {countryData.subregion}</p>
               <p>
                 Official Language{Object.keys(countryData.languages).length > 1 ? "s" : ""}:{" "}
-                {Object.values(countryData.languages)
-                  .join(", ")}
+                {Object.values(countryData.languages).join(", ")}
               </p>
               <p>
                 Currenc{Object.keys(countryData.currencies).length > 1 ? "ies" : "y"}:{" "}
@@ -65,21 +66,29 @@ function App() {
               <p>Area: {Math.round((countryData.area * 0.386102), 0).toLocaleString()} mi²</p>
               <p>Independent? {countryData.independent ? "Yes" : "No"}</p>
               <p>Number of Timezones: {countryData.timezones.length}</p>
+
+              {/* capitalize driving side safely */}
+              <p>
+                Drives on: {countryData.car?.side
+                  ? countryData.car.side.charAt(0).toUpperCase() + countryData.car.side.slice(1)
+                  : "Unknown"}
+              </p>
             </>
           )}
 
-          {/* From your JSON */}
+          {/* optional content from JSON */}
           {/* <p>Music: {selectedCountry.music}</p>
           <p>Foods: {selectedCountry.foods.join(", ")}</p>
           <p>Traditions: {selectedCountry.traditions.join(", ")}</p> */}
 
+          {/* external links */}
           <p>
             <a
               href={`https://www.cia.gov/the-world-factbook/countries/${selectedCountry.name_long}/#introduction`.toLowerCase().replace(/ /g, "-")}
               target="_blank"
               className="text-blue-600 underline"
             >
-              Learn more about {`${selectedCountry.name_long}`}!
+              Learn more about {selectedCountry.name_long}!
             </a>
           </p>
           <p>
@@ -97,17 +106,11 @@ function App() {
   );
 }
 
+// helper to format GDP values
 function formatGDP(gdpMillions) {
-  if (gdpMillions >= 1_000_000) {
-    // Convert millions → trillions
-    return `$${(gdpMillions / 1_000_000).toFixed(1)} trillion`;
-  } else if (gdpMillions >= 1_000) {
-    // Convert millions → billions
-    return `$${(gdpMillions / 1_000).toFixed(1)} billion`;
-  } else {
-    // Keep in millions
-    return `$${gdpMillions.toLocaleString()} million`;
-  }
+  if (gdpMillions >= 1_000_000) return `$${(gdpMillions / 1_000_000).toFixed(1)} trillion`;
+  if (gdpMillions >= 1_000) return `$${(gdpMillions / 1_000).toFixed(1)} billion`;
+  return `$${gdpMillions.toLocaleString()} million`;
 }
 
 export default App;
