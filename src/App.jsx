@@ -62,11 +62,38 @@ function App() {
             {/* country info from API */}
             {countryData && (
               <>
+                {/* Identity */}
                 <p>
                   <strong>Official Name:</strong> {countryData.name.official}
                 </p>
                 <p>
+                  <strong>Region:</strong> {countryData.region} — {countryData.subregion}
+                </p>
+                <p>
+                  <strong>Capital{Array.isArray(countryData.capital) && countryData.capital.length > 1 ? "s" : ""}:</strong>{" "}
+                  {Array.isArray(countryData.capital)
+                    ? countryData.capital.join(", ")
+                    : countryData.capital}
+                </p>
+                <p>
+                  <strong>Independent?</strong> {countryData.independent ? "Yes" : "No"}
+                </p>
+
+                {/* Society */}
+                <p>
                   <strong>Population:</strong> {countryData.population.toLocaleString()}
+                </p>
+                <p>
+                  <strong>Official Language{Object.keys(countryData.languages).length > 1 ? "s" : ""}:</strong>{" "}
+                  {Object.values(countryData.languages).join(", ")}
+                </p>
+                
+                {/* Economy */}
+                <p>
+                  <strong>Currenc{Object.keys(countryData.currencies).length > 1 ? "ies" : "y"}:</strong>{" "}
+                  {Object.values(countryData.currencies)
+                    .map(curr => `${curr.name} (${curr.symbol})`)
+                    .join(", ")}
                 </p>
                 <p>
                   <strong>GDP:</strong>{" "}
@@ -80,42 +107,23 @@ function App() {
                   ? countryFeature.properties.economy.slice(2)
                   : "N/A"}
                 </p>
-                <p>
-                  <strong>Region:</strong> {countryData.region} — {countryData.subregion}
-                </p>
-                <p>
-                  <strong>Official Language{Object.keys(countryData.languages).length > 1 ? "s" : ""}:</strong>{" "}
-                  {Object.values(countryData.languages).join(", ")}
-                </p>
-                <p>
-                  <strong>Currenc{Object.keys(countryData.currencies).length > 1 ? "ies" : "y"}:</strong>{" "}
-                  {Object.values(countryData.currencies)
-                    .map(curr => `${curr.name} (${curr.symbol})`)
-                    .join(", ")}
-                </p>
-                <p>
-                  <strong>Capital{Array.isArray(countryData.capital) && countryData.capital.length > 1 ? "s" : ""}:</strong>{" "}
-                  {Array.isArray(countryData.capital)
-                    ? countryData.capital.join(", ")
-                    : countryData.capital}
-                </p>
+
+                {/* Geography */}
                 <p>
                   <strong>Area:</strong> {Math.round((countryData.area * 0.386102), 0).toLocaleString()} mi²
                 </p>
-                <p>
-                  <strong>Independent?</strong> {countryData.independent ? "Yes" : "No"}
-                </p>
+                
                 <p>
                   <strong>Number of Timezones:</strong> {countryData.timezones.length}
                 </p>
                 <p>
-                  <strong>Start of Week:</strong> {countryData.startOfWeek
-                    ? countryData.startOfWeek.charAt(0).toUpperCase() + countryData.startOfWeek.slice(1)
+                  <strong>Drives on:</strong> {countryData.car?.side
+                    ? countryData.car.side.charAt(0).toUpperCase() + countryData.car.side.slice(1)
                     : "Unknown"}
                 </p>
                 <p>
-                  <strong>Drives on:</strong> {countryData.car?.side
-                    ? countryData.car.side.charAt(0).toUpperCase() + countryData.car.side.slice(1)
+                  <strong>Start of Week:</strong> {countryData.startOfWeek
+                    ? countryData.startOfWeek.charAt(0).toUpperCase() + countryData.startOfWeek.slice(1)
                     : "Unknown"}
                 </p>
               </>
